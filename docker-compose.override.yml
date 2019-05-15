@@ -1,8 +1,8 @@
 version: '3'
 services:
-  kanban:
+  express-server:
     env_file: .env
-    command: ['./node_modules/.bin/nodemon', 'server.js']
+    command: ['./node_modules/.bin/nodemon', 'server/server.js']
     volumes:
       - ./:/app
     ports:

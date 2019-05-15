@@ -18,20 +18,19 @@ const bcrypt = require('bcryptjs');
 const methodOverride = require('method-override');
 
 // source data
-const gallery = require('./routes/gallery.js');
-const login = require('./routes/login.js');
-const logout = require('./routes/logout.js');
-const register = require('./routes/register.js');
-const user = require('./routes/user.js');
-const User = require('./database/models/User');
-const guard = require('./middleware/guard');
+// const gallery = require('./routes/gallery.js');
+// const login = require('./routes/login.js');
+// const logout = require('./routes/logout.js');
+// const register = require('./routes/register.js');
+// const user = require('./routes/user.js');
+// const User = require('./database/models/User');
+// const guard = require('./middleware/guard');
 
-const PORT = 3000;
 const app = express();
 
 require('dotenv').config();
+const PORT = process.env.EXPRESS_CONTAINER_PORT;
 
-app.use(express.static('public'));
 app.use(urlParser);
 app.use(cookieParser());
 app.use(methodOverride('_method'));
