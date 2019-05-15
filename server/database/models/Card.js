@@ -12,8 +12,12 @@ class Card extends bookshelf.Model {
     return true;
   }
 
-  users() {
-    return this.belongsTo('User');
+  created_by() {
+    return this.belongsTo('User', 'created_by');
+  }
+
+  assigned_to() {
+    return this.belongsTo('User', 'assigned_to');
   }
 
   priorities() {

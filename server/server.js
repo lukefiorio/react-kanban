@@ -2,7 +2,6 @@
 
 // express
 const express = require('express');
-const exphbs = require('express-handlebars');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
@@ -18,13 +17,13 @@ const bcrypt = require('bcryptjs');
 const methodOverride = require('method-override');
 
 // source data
-// const gallery = require('./routes/gallery.js');
-// const login = require('./routes/login.js');
-// const logout = require('./routes/logout.js');
-// const register = require('./routes/register.js');
-// const user = require('./routes/user.js');
+const login = require('./routes/login.js');
+const logout = require('./routes/logout.js');
+const users = require('./routes/users.js');
+const priorities = require('./routes/priorities.js');
+const statuses = require('./routes/statuses.js');
+const Card = require('./database/models/Card');
 // const User = require('./database/models/User');
-// const guard = require('./middleware/guard');
 
 const app = express();
 
@@ -47,11 +46,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use('/gallery', gallery);
-// app.use('/register', register);
-// app.use('/login', login);
-// app.use('/logout', logout);
-// app.use('/user', user);
+app.use('/api/login', login);
+app.use('/api/logout', logout);
+app.use('/api/users', users);
+app.use('/api/statuses', statuses);
+app.use('/api/priorities', priorities);
 
 passport.use(
   new localStrategy(function(username, password, done) {
@@ -104,7 +103,10 @@ passport.deserializeUser(function(user, done) {
 
 // home page
 app.get('/', (req, res) => {
-  return res.send('hello world');
+  new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
+    const allCards = result;
+    return res.send(allCards);
+  });
 });
 
 const server = app.listen(PORT, () => {
