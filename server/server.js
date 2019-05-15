@@ -17,12 +17,13 @@ const bcrypt = require('bcryptjs');
 const methodOverride = require('method-override');
 
 // source data
+const cards = require('./routes/cards.js');
 const login = require('./routes/login.js');
 const logout = require('./routes/logout.js');
 const users = require('./routes/users.js');
 const priorities = require('./routes/priorities.js');
 const statuses = require('./routes/statuses.js');
-const Card = require('./database/models/Card');
+// const Card = require('./database/models/Card');
 // const User = require('./database/models/User');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api/cards', cards);
 app.use('/api/login', login);
 app.use('/api/logout', logout);
 app.use('/api/users', users);
@@ -102,12 +104,12 @@ passport.deserializeUser(function(user, done) {
 });
 
 // home page
-app.get('/', (req, res) => {
-  new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
-    const allCards = result;
-    return res.send(allCards);
-  });
-});
+// app.get('/', (req, res) => {
+//   new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
+//     const allCards = result;
+//     return res.send(allCards);
+//   });
+// });
 
 const server = app.listen(PORT, () => {
   console.log(`Express app is listening on port ${PORT}`);
