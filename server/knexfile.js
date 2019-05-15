@@ -1,6 +1,6 @@
 'use strict';
 
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 module.exports = {
   client: 'postgresql',

@@ -2,6 +2,7 @@
 
 const bookshelf = require('../bookshelf');
 
+require('./Priority');
 class Card extends bookshelf.Model {
   get tableName() {
     return 'cards';

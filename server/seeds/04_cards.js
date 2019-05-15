@@ -31,7 +31,7 @@ exports.seed = function(knex, Promise) {
         },
         {
           title: 'dishes',
-          body: 'rowValue1',
+          body: 'Clean the dishes',
           priority_id: 4,
           status_id: 3,
           created_by: 5,
