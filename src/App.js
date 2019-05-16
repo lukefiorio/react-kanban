@@ -1,28 +1,51 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CardList from './containers/CardList';
+import { connect } from 'react-redux';
+import { loadCards } from './actions';
 
 class App extends Component {
-  componentDidMount() {
-    fetch('/')
-      .then((response) => console.log(response.json()))
-      .then((data) => this.setState({ data }));
+  constructor(props) {
+    super(props);
+
+    this.state = {};
   }
+
+  componentDidMount() {
+    console.log('mount:', this.props.loadCards());
+    return this.props.loadCards();
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-            Learn React
-          </a>
-        </header>
+        <header className="App-header" />
+        <div className="cardlist-container">
+          <CardList cards={this.props.cards} />
+        </div>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  // return { ...state }
+  return {
+    cards: state.cardReducer.cards,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadCards: () => {
+      return dispatch(loadCards());
+    },
+  };
+};
+
+App = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(App);
 
 export default App;
