@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import CardList from './containers/CardList';
+import AddCard from './containers/AddCard';
+import CardToDo from './containers/CardToDo';
+import CardInProgress from './containers/CardInProgress';
+import CardDone from './containers/CardDone';
 import { connect } from 'react-redux';
 import { loadCards } from './actions';
 
@@ -20,8 +23,22 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header" />
-        <div className="cardlist-container">
-          <CardList cards={this.props.cards} />
+        <div className="card-container">
+          <div className="cardToDo-container">
+            <h3>To-Do</h3>
+            <CardToDo cards={this.props.cards} />
+          </div>
+          <div className="cardInProgress-container">
+            <h3>In-Progress</h3>
+            <CardInProgress cards={this.props.cards} />
+          </div>
+          <div className="cardDone-container">
+            <h3>Done</h3>
+            <CardDone cards={this.props.cards} />
+          </div>
+        </div>
+        <div className="add-card-form">
+          <AddCard />
         </div>
       </div>
     );

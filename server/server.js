@@ -31,6 +31,7 @@ const app = express();
 require('dotenv').config();
 const PORT = process.env.EXPRESS_CONTAINER_PORT;
 
+app.use(bodyParser.json());
 app.use(urlParser);
 app.use(cookieParser());
 app.use(methodOverride('_method'));

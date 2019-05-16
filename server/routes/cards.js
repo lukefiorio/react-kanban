@@ -12,22 +12,27 @@ router
     new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
       const allCards = result.toJSON();
       return res.send(allCards);
-      // return res.send(allCards):
     });
   })
   .post((req, res) => {
+    console.log('************** body:', req.body);
+    // console.log('************** req:', req);
     new Card()
       .save({
         title: req.body.title,
         body: req.body.body,
         priority_id: req.body.priority_id,
         status_id: req.body.status_id,
-        created_by: req.user.id,
+        created_by: req.body.created_by,
         assigned_to: req.body.assigned_to,
       })
       .then((result) => {
         console.log('Successful post');
-        return res.redirect('/api/cards');
+        return res.json(result);
+        // return res.redirect('/api/cards');
+      })
+      .catch((err) => {
+        console.log('error:', err);
       });
   });
 
