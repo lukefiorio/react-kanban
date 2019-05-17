@@ -40,6 +40,9 @@ export function addCard(newCard) {
           type: ADD_CARD,
           payload: body,
         });
+      })
+      .catch((err) => {
+        console.log('error:', err);
       });
   };
 }

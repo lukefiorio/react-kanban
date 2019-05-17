@@ -11,12 +11,18 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      cards: [],
+    };
   }
 
   componentDidMount() {
     console.log('mount:', this.props.loadCards());
     return this.props.loadCards();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    return this.setState({ cards: nextProps.cards });
   }
 
   render() {
@@ -48,7 +54,9 @@ class App extends Component {
 const mapStateToProps = (state) => {
   // return { ...state }
   return {
-    cards: state.cardReducer.cards,
+    cards: state.cards,
+    // only if using multiple reducers
+    // cards: state.cardReducer.cards,
   };
 };
 

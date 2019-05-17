@@ -18,7 +18,9 @@ const composeEnhancers =
       })
     : compose;
 
-const reducer = combineReducers({ cardReducer });
+// only need if have multiple reducer files
+// const reducer = combineReducers({ cardReducer });
+const reducer = cardReducer;
 const store = createStore(reducer, applyMiddleware(thunk));
 
 ReactDOM.render(

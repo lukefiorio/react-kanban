@@ -14,6 +14,7 @@ class CardDone extends Component {
         return card.status_id === 3;
       })
       .map((card, idx) => {
+        // return stmt run once PER qualifying card
         return (
           <Card
             key={idx}

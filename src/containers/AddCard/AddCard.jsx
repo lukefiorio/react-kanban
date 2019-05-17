@@ -63,12 +63,12 @@ class AddCard extends Component {
     console.log(title);
     // pass addCard() to dispatchToProps;
     this.props.addCard({
-      title: title,
-      body: body,
-      priority_id: priority_id,
-      status_id: status_id,
-      created_by: created_by,
-      assigned_to: assigned_to,
+      title,
+      body,
+      priority_id,
+      status_id,
+      created_by,
+      assigned_to,
     });
 
     // resets back to empty string after card submission
