@@ -1,6 +1,26 @@
 export const LOAD_CARDS = 'LOAD_CARDS';
 export const ADD_CARD = 'ADD_CARD';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
+export const LOAD_USERS = 'LOAD_USERS';
+
+export const loadUsers = () => {
+  return (dispatch) => {
+    return fetch('/api/users')
+      .then((response) => {
+        return response.json();
+      })
+      .then((users) => {
+        console.log('dispatch:', users);
+        return dispatch({
+          type: LOAD_USERS,
+          payload: users,
+        });
+      })
+      .catch((err) => {
+        console.log('error', err);
+      });
+  };
+};
 
 export const loadCards = () => {
   return (dispatch) => {

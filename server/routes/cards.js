@@ -15,8 +15,6 @@ router
     });
   })
   .post((req, res) => {
-    console.log('************** body:', req.body);
-    // console.log('************** req:', req);
     new Card()
       .save({
         title: req.body.title,
@@ -29,7 +27,6 @@ router
       .then((result) => {
         console.log('Successful post');
         return res.json(result);
-        // return res.redirect('/api/cards');
       })
       .catch((err) => {
         console.log('error:', err);

@@ -2,12 +2,12 @@ import React from 'react';
 import CardList from '../../containers/CardList/CardList';
 
 const Column = (props) => {
-  const { status_id, cards } = props;
+  const { cards, status } = props;
 
   //
   return (
     <div className="card-list">
-      <CardList key={idx} title={card.title} body={card.body} status={card.status_id} />
+      <CardList cards={cards} status={status} />
     </div>
   );
 };

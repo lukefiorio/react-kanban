@@ -1,6 +1,7 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
 import { addCard } from '../../actions';
+import UserDropDown from '../../components/UserDropDown';
 
 class AddCard extends Component {
   constructor(props) {
@@ -11,8 +12,8 @@ class AddCard extends Component {
       body: '',
       priority_id: '',
       status_id: '',
-      created_by: '',
-      assigned_to: '',
+      created_by: 1,
+      assigned_to: 1,
     };
 
     this.titleInputRef = createRef();
@@ -77,8 +78,8 @@ class AddCard extends Component {
       body: '',
       priority_id: '',
       status_id: '',
-      created_by: '',
-      assigned_to: '',
+      created_by: 1,
+      assigned_to: 1,
     });
 
     // sets focus to title after submission
@@ -86,40 +87,68 @@ class AddCard extends Component {
   }
 
   render() {
+    const userDropDown = this.props.users.map((user, idx) => {
+      return <UserDropDown key={idx} id={user.id} first_name={user.first_name} last_name={user.last_name} />;
+    });
+
     return (
       <form>
-        <input type="text" ref={this.titleInputRef} value={this.state.title} onChange={this.handleTitleChange} />
-        <input type="text" value={this.state.body} onChange={this.handleBodyChange} />
-        <input type="text" value={this.state.priority_id} onChange={this.handlePriorityChange} />
-        <input type="text" value={this.state.status_id} onChange={this.handleStatusChange} />
-        <input type="text" value={this.state.created_by} onChange={this.handleCreatedChange} />
-        <input type="text" value={this.state.assigned_to} onChange={this.handleAssignedChange} />
+        <div className="formRow">
+          <label>Title:</label>
+          <input type="text" ref={this.titleInputRef} value={this.state.title} onChange={this.handleTitleChange} />
+        </div>
+        <div className="formRow">
+          <label>Body:</label>
+          <input type="text" value={this.state.body} onChange={this.handleBodyChange} />
+        </div>
+        <div className="formRow">
+          <label>Priority:</label>
+          <input type="text" value={this.state.priority_id} onChange={this.handlePriorityChange} />
+        </div>
+        <div className="formRow">
+          <label>Status:</label>
+          <input type="text" value={this.state.status_id} onChange={this.handleStatusChange} />
+        </div>
+        <div className="formRow">
+          <label>Created By:</label>
+          <select value={this.state.created_by} onChange={this.handleCreatedChange}>
+            {userDropDown}
+          </select>
+        </div>
+        <div className="formRow">
+          <label>Assigned To:</label>
+          <select value={this.state.assigned_to} onChange={this.handleAssignedChange}>
+            {userDropDown}
+          </select>
+        </div>
         <button onClick={this.handleSubmit}>Save Card</button>
       </form>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return {};
-};
+// const mapStateToProps = (state) => {
+//   return {};
+// };
 
 const mapDispacthToProps = (dispatch) => {
   return {
     // this first addCard is the one we get from this.props.addBook
     // in the handleSubmit(e) function
     addCard: (card) => {
-      // THIS addBook (below) is the action we imported at top
+      // THIS addCard (below) is the action we imported at top
       // book is the newBook we'll be passing in
       const addCardAction = addCard(card);
       dispatch(addCardAction);
+      // dispatch(addCard(card));
     },
   };
 };
 
 // passes redux state to component properties
 AddCard = connect(
-  mapStateToProps,
+  // mapStateToProps,
+  null,
   mapDispacthToProps,
 )(AddCard);
 

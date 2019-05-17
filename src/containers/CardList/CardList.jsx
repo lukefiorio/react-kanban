@@ -7,9 +7,14 @@ class CardList extends Component {
   }
 
   render() {
-    const cardList = this.props.cards.map((card, index) => {
-      return <Card key={index} title={card.title} body={card.body} />;
-    });
+    console.log('****CardList props:', this.props);
+    const cardList = this.props.cards
+      .filter((card) => {
+        return card.status_id === this.props.status;
+      })
+      .map((card, idx) => {
+        return <Card key={idx} title={card.title} body={card.body} />;
+      });
 
     return <>{cardList}</>;
   }

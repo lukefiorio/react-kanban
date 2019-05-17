@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+// import PropTypes from 'prop-types';
 import './App.css';
 import AddCard from './containers/AddCard';
-import CardToDo from './containers/CardToDo';
-import CardInProgress from './containers/CardInProgress';
-import CardDone from './containers/CardDone';
+import Board from './containers/Board';
+// import CardToDo from './containers/CardToDo';
+// import CardInProgress from './containers/CardInProgress';
+// import CardDone from './containers/CardDone';
 import { connect } from 'react-redux';
 import { loadCards } from './actions';
+import { loadUsers } from './actions';
 
 class App extends Component {
   constructor(props) {
@@ -13,12 +16,15 @@ class App extends Component {
 
     this.state = {
       cards: [],
+      users: [],
     };
   }
 
   componentDidMount() {
-    console.log('mount:', this.props.loadCards());
-    return this.props.loadCards();
+    // console.log('mount:', this.props.loadCards());
+    // return this.props.loadCards();
+    // return this.setState({ cards: this.props.loadCards(), users: this.props.loadUsers() });
+    return this.props.loadCards() && this.props.loadUsers();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -26,11 +32,15 @@ class App extends Component {
   }
 
   render() {
+    // console.log('CARDS:', this.props.cards);
+    // console.log('USERS:', this.props.users);
     return (
       <div className="App">
         <header className="App-header" />
         <div className="card-container">
-          <div className="cardToDo-container">
+          {/* pass current props.cards to child (Board) as 'cards' */}
+          <Board cards={this.props.cards} />
+          {/* <div className="cardToDo-container">
             <h3>To-Do</h3>
             <CardToDo cards={this.props.cards} />
           </div>
@@ -41,20 +51,25 @@ class App extends Component {
           <div className="cardDone-container">
             <h3>Done</h3>
             <CardDone cards={this.props.cards} />
-          </div>
+          </div> */}
         </div>
         <div className="add-card-form">
-          <AddCard />
+          <AddCard users={this.props.users} />
         </div>
       </div>
     );
   }
 }
 
+// App.propTypes = {
+//   cards: PropTypes.array.isRequired,
+// };
+
 const mapStateToProps = (state) => {
   // return { ...state }
   return {
     cards: state.cards,
+    users: state.users,
     // only if using multiple reducers
     // cards: state.cardReducer.cards,
   };
@@ -64,6 +79,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     loadCards: () => {
       return dispatch(loadCards());
+    },
+    loadUsers: () => {
+      return dispatch(loadUsers());
     },
   };
 };
