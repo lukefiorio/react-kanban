@@ -7,7 +7,7 @@ const Card = (props) => {
   // const title = props.title;
   // const body = props.body;
   // gets run
-  console.log('-----Card instantiated. props:', props);
+  // console.log('-----Card instantiated. props:', props);
   const { title, body } = props;
 
   // const { title, body, priority_id, status_id, created_by, assigned_to } = props;

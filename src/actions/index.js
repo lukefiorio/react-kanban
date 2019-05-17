@@ -1,19 +1,20 @@
-export const LOAD_CARDS = 'LOAD_CARDS';
+export const LOAD_PRIORITIES = 'LOAD_PRIORITIES';
+export const LOAD_STATUSES = 'LOAD_STATUSES';
 export const ADD_CARD = 'ADD_CARD';
+export const LOAD_CARDS = 'LOAD_CARDS';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const LOAD_USERS = 'LOAD_USERS';
 
-export const loadUsers = () => {
+export const loadPriorities = () => {
   return (dispatch) => {
-    return fetch('/api/users')
+    return fetch('/api/priorities')
       .then((response) => {
         return response.json();
       })
-      .then((users) => {
-        console.log('dispatch:', users);
+      .then((priorities) => {
         return dispatch({
-          type: LOAD_USERS,
-          payload: users,
+          type: LOAD_PRIORITIES,
+          payload: priorities,
         });
       })
       .catch((err) => {
@@ -22,18 +23,36 @@ export const loadUsers = () => {
   };
 };
 
-export const loadCards = () => {
+export const loadStatuses = () => {
   return (dispatch) => {
-    return fetch('/api/cards')
+    return fetch('/api/statuses')
       .then((response) => {
-        console.log('fetch:', response);
+        console.log('statuses:', response);
         return response.json();
       })
-      .then((cards) => {
-        console.log('dispatch:', cards);
+      .then((statuses) => {
+        console.log('statuses:', statuses);
         return dispatch({
-          type: LOAD_CARDS,
-          payload: cards,
+          type: LOAD_STATUSES,
+          payload: statuses,
+        });
+      })
+      .catch((err) => {
+        console.log('error', err);
+      });
+  };
+};
+
+export const loadUsers = () => {
+  return (dispatch) => {
+    return fetch('/api/users')
+      .then((response) => {
+        return response.json();
+      })
+      .then((users) => {
+        return dispatch({
+          type: LOAD_USERS,
+          payload: users,
         });
       })
       .catch((err) => {
@@ -66,6 +85,25 @@ export function addCard(newCard) {
       });
   };
 }
+
+export const loadCards = () => {
+  return (dispatch) => {
+    return fetch('/api/cards')
+      .then((response) => {
+        return response.json();
+      })
+      .then((cards) => {
+        // console.log('dispatch:', cards);
+        return dispatch({
+          type: LOAD_CARDS,
+          payload: cards,
+        });
+      })
+      .catch((err) => {
+        console.log('error', err);
+      });
+  };
+};
 
 export function changeStatus(editCard) {
   return (dispatch) => {

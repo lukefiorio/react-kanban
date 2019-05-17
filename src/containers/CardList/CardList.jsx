@@ -7,7 +7,7 @@ class CardList extends Component {
   }
 
   render() {
-    console.log('****CardList props:', this.props);
+    // console.log('****CardList props:', this.props);
     const cardList = this.props.cards
       .filter((card) => {
         return card.status_id === this.props.status;

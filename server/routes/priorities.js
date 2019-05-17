@@ -7,7 +7,10 @@ const Priority = require('../database/models/Priority');
 // const userGuard = require('../middleware/userGuard');
 
 router.route('/').get((req, res) => {
-  return res.send('Show a list of priorities');
+  new Priority().fetchAll().then((result) => {
+    const allPriorities = result.toJSON();
+    return res.send(allPriorities);
+  });
 });
 
 router.route('/new').get((req, res) => {

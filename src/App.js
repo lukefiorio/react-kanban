@@ -7,8 +7,8 @@ import Board from './containers/Board';
 // import CardInProgress from './containers/CardInProgress';
 // import CardDone from './containers/CardDone';
 import { connect } from 'react-redux';
-import { loadCards } from './actions';
-import { loadUsers } from './actions';
+import { loadCards, loadUsers, loadPriorities, loadStatuses } from './actions';
+// import { loadUsers } from './actions';
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +17,8 @@ class App extends Component {
     this.state = {
       cards: [],
       users: [],
+      priorities: [],
+      statuses: [],
     };
   }
 
@@ -24,7 +26,7 @@ class App extends Component {
     // console.log('mount:', this.props.loadCards());
     // return this.props.loadCards();
     // return this.setState({ cards: this.props.loadCards(), users: this.props.loadUsers() });
-    return this.props.loadCards() && this.props.loadUsers();
+    return this.props.loadCards() && this.props.loadUsers() && this.props.loadPriorities() && this.props.loadStatuses();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,6 +36,7 @@ class App extends Component {
   render() {
     // console.log('CARDS:', this.props.cards);
     // console.log('USERS:', this.props.users);
+    // console.log('*********props:', this.props);
     return (
       <div className="App">
         <header className="App-header" />
@@ -54,7 +57,7 @@ class App extends Component {
           </div> */}
         </div>
         <div className="add-card-form">
-          <AddCard users={this.props.users} />
+          <AddCard users={this.props.users} statuses={this.props.statuses} priorities={this.props.priorities} />
         </div>
       </div>
     );
@@ -70,6 +73,8 @@ const mapStateToProps = (state) => {
   return {
     cards: state.cards,
     users: state.users,
+    priorities: state.priorities,
+    statuses: state.statuses,
     // only if using multiple reducers
     // cards: state.cardReducer.cards,
   };
@@ -82,6 +87,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadUsers: () => {
       return dispatch(loadUsers());
+    },
+    loadPriorities: () => {
+      return dispatch(loadPriorities());
+    },
+    loadStatuses: () => {
+      return dispatch(loadStatuses());
     },
   };
 };

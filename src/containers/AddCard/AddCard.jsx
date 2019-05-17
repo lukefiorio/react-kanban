@@ -1,7 +1,9 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { addCard } from '../../actions';
+import { addCard, loadCards } from '../../actions';
 import UserDropDown from '../../components/UserDropDown';
+import StatusDropDown from '../../components/StatusDropDown';
+import PriorityDropDown from '../../components/PriorityDropDown';
 
 class AddCard extends Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class AddCard extends Component {
       title: '',
       body: '',
       priority_id: '',
-      status_id: '',
+      status_id: 1,
       created_by: 1,
       assigned_to: 1,
     };
@@ -61,7 +63,7 @@ class AddCard extends Component {
     e.preventDefault();
 
     const { title, body, priority_id, status_id, created_by, assigned_to } = this.state;
-    console.log(title);
+
     // pass addCard() to dispatchToProps;
     this.props.addCard({
       title,
@@ -73,14 +75,17 @@ class AddCard extends Component {
     });
 
     // resets back to empty string after card submission
-    this.setState({
-      title: '',
-      body: '',
-      priority_id: '',
-      status_id: '',
-      created_by: 1,
-      assigned_to: 1,
-    });
+    this.setState(
+      {
+        title: '',
+        body: '',
+        priority_id: '',
+        status_id: 1,
+        created_by: 1,
+        assigned_to: 1,
+      },
+      () => this.props.loadCards(),
+    );
 
     // sets focus to title after submission
     this.titleInputRef.current.focus();
@@ -90,6 +95,12 @@ class AddCard extends Component {
     const userDropDown = this.props.users.map((user, idx) => {
       return <UserDropDown key={idx} id={user.id} first_name={user.first_name} last_name={user.last_name} />;
     });
+
+    // console.log('-----props:', this.props);
+
+    // const statusDropDown = this.props.statuses.map((status, idx) => {
+    //   return <StatusDropDown key={idx} id={status.id} name={status.name} />;
+    // });
 
     return (
       <form>
@@ -107,6 +118,9 @@ class AddCard extends Component {
         </div>
         <div className="formRow">
           <label>Status:</label>
+          {/* <select value={this.state.status_id} onChange={this.handleStatusChange}>
+            {statusDropDown}
+          </select> */}
           <input type="text" value={this.state.status_id} onChange={this.handleStatusChange} />
         </div>
         <div className="formRow">
@@ -131,7 +145,7 @@ class AddCard extends Component {
 //   return {};
 // };
 
-const mapDispacthToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     // this first addCard is the one we get from this.props.addBook
     // in the handleSubmit(e) function
@@ -142,6 +156,9 @@ const mapDispacthToProps = (dispatch) => {
       dispatch(addCardAction);
       // dispatch(addCard(card));
     },
+    loadCards: () => {
+      dispatch(loadCards());
+    },
   };
 };
 
@@ -149,7 +166,7 @@ const mapDispacthToProps = (dispatch) => {
 AddCard = connect(
   // mapStateToProps,
   null,
-  mapDispacthToProps,
+  mapDispatchToProps,
 )(AddCard);
 
 export default AddCard;

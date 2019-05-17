@@ -1,4 +1,4 @@
-import { LOAD_CARDS, LOAD_USERS, ADD_CARD, CHANGE_STATUS } from '../actions';
+import { ADD_CARD, LOAD_CARDS, LOAD_USERS, CHANGE_STATUS, LOAD_PRIORITIES, LOAD_STATUSES } from '../actions';
 
 const initialState = {
   cards: [],
@@ -13,6 +13,10 @@ function cardReducer(state = initialState, action) {
       return Object.assign({}, state, { cards: [...action.payload] });
     case LOAD_USERS:
       return Object.assign({}, state, { users: [...action.payload] });
+    case LOAD_STATUSES:
+      return Object.assign({}, state, { statuses: [...action.payload] });
+    case LOAD_PRIORITIES:
+      return Object.assign({}, state, { priorities: [...action.payload] });
     case CHANGE_STATUS:
       // almost certainly needs to be updated
       return Object.assign({}, { cards: [...action.payload] });

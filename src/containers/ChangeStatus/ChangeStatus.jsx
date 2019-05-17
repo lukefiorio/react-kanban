@@ -21,7 +21,7 @@ const mapStateToProps = (state) => {
   return {};
 };
 
-const mapDispacthToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     // this first addCard is the one we get from this.props.addBook
     // in the handleSubmit(e) function
@@ -37,7 +37,7 @@ const mapDispacthToProps = (dispatch) => {
 // passes redux state to component properties
 ChangeStatus = connect(
   mapStateToProps,
-  mapDispacthToProps,
+  mapDispatchToProps,
 )(ChangeStatus);
 
 export default ChangeStatus;

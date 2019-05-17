@@ -7,7 +7,10 @@ const Status = require('../database/models/Status');
 // const userGuard = require('../middleware/userGuard');
 
 router.route('/').get((req, res) => {
-  return res.send('Show a list of statuses');
+  new Status().fetchAll().then((result) => {
+    const allStatuses = result.toJSON();
+    return res.send(allStatuses);
+  });
 });
 
 router.route('/new').get((req, res) => {
