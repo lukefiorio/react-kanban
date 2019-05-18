@@ -4,6 +4,7 @@ export const ADD_CARD = 'ADD_CARD';
 export const LOAD_CARDS = 'LOAD_CARDS';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const LOAD_USERS = 'LOAD_USERS';
+export const DELETE_CARD = 'DELETE_CARD';
 
 export const loadPriorities = () => {
   return (dispatch) => {
@@ -27,7 +28,7 @@ export const loadStatuses = () => {
   return (dispatch) => {
     return fetch('/api/statuses')
       .then((response) => {
-        console.log('statuses:', response);
+        // console.log('statuses:', response);
         return response.json();
       })
       .then((statuses) => {
@@ -77,6 +78,28 @@ export function addCard(newCard) {
       .then((body) => {
         return dispatch({
           type: ADD_CARD,
+          payload: body,
+        });
+      })
+      .catch((err) => {
+        console.log('error:', err);
+      });
+  };
+}
+
+export function deleteCard(id) {
+  // console.log(id);
+  return (dispatch) => {
+    return fetch(`/api/cards/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
+      .then((body) => {
+        return dispatch({
+          type: DELETE_CARD,
           payload: body,
         });
       })

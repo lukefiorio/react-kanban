@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { addCard, loadCards } from '../../actions';
+import { addCard, loadCards, loadUsers, loadPriorities, loadStatuses } from '../../actions';
 import UserDropDown from '../../components/UserDropDown';
 import StatusDropDown from '../../components/StatusDropDown';
 import PriorityDropDown from '../../components/PriorityDropDown';
@@ -12,7 +12,7 @@ class AddCard extends Component {
     this.state = {
       title: '',
       body: '',
-      priority_id: '',
+      priority_id: 3,
       status_id: 1,
       created_by: 1,
       assigned_to: 1,
@@ -75,17 +75,14 @@ class AddCard extends Component {
     });
 
     // resets back to empty string after card submission
-    this.setState(
-      {
-        title: '',
-        body: '',
-        priority_id: '',
-        status_id: 1,
-        created_by: 1,
-        assigned_to: 1,
-      },
-      () => this.props.loadCards(),
-    );
+    this.setState({
+      title: '',
+      body: '',
+      priority_id: 3,
+      status_id: 1,
+      created_by: 1,
+      assigned_to: 1,
+    });
 
     // sets focus to title after submission
     this.titleInputRef.current.focus();
@@ -96,11 +93,13 @@ class AddCard extends Component {
       return <UserDropDown key={idx} id={user.id} first_name={user.first_name} last_name={user.last_name} />;
     });
 
-    // console.log('-----props:', this.props);
+    const priorityDropDown = this.props.priorities.map((priority, idx) => {
+      return <PriorityDropDown key={idx} id={priority.id} name={priority.name} />;
+    });
 
-    // const statusDropDown = this.props.statuses.map((status, idx) => {
-    //   return <StatusDropDown key={idx} id={status.id} name={status.name} />;
-    // });
+    const statusDropDown = this.props.statuses.map((status, idx) => {
+      return <StatusDropDown key={idx} id={status.id} name={status.name} />;
+    });
 
     return (
       <form>
@@ -114,14 +113,17 @@ class AddCard extends Component {
         </div>
         <div className="formRow">
           <label>Priority:</label>
-          <input type="text" value={this.state.priority_id} onChange={this.handlePriorityChange} />
+          <select value={this.state.priority_id} onChange={this.handlePriorityChange}>
+            {priorityDropDown}
+          </select>
+          {/* <input type="text" value={this.state.priority_id} onChange={this.handlePriorityChange} /> */}
         </div>
         <div className="formRow">
           <label>Status:</label>
-          {/* <select value={this.state.status_id} onChange={this.handleStatusChange}>
+          <select value={this.state.status_id} onChange={this.handleStatusChange}>
             {statusDropDown}
-          </select> */}
-          <input type="text" value={this.state.status_id} onChange={this.handleStatusChange} />
+          </select>
+          {/* <input type="text" value={this.state.status_id} onChange={this.handleStatusChange} /> */}
         </div>
         <div className="formRow">
           <label>Created By:</label>
@@ -158,6 +160,15 @@ const mapDispatchToProps = (dispatch) => {
     },
     loadCards: () => {
       dispatch(loadCards());
+    },
+    loadUsers: () => {
+      dispatch(loadUsers());
+    },
+    loadStatuses: () => {
+      dispatch(loadStatuses());
+    },
+    loadPriorities: () => {
+      dispatch(loadPriorities());
     },
   };
 };

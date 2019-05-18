@@ -26,6 +26,7 @@ router
       })
       .then((result) => {
         console.log('Successful post');
+        console.log(result);
         return res.json(result);
       })
       .catch((err) => {
@@ -65,10 +66,15 @@ router
     });
   })
   .delete((req, res) => {
+    console.log(req.params.id);
     Card.where({ id: req.params.id })
       .destroy()
       .then((result) => {
-        return res.redirect('/api/cards');
+        new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
+          const allCards = result.toJSON();
+          console.log(allCards);
+          return res.send(allCards);
+        });
       });
   });
 

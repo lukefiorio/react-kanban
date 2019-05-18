@@ -29,13 +29,14 @@ class App extends Component {
     return this.props.loadCards() && this.props.loadUsers() && this.props.loadPriorities() && this.props.loadStatuses();
   }
 
-  componentWillReceiveProps(nextProps) {
-    return this.setState({ cards: nextProps.cards });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   return this.setState({ cards: nextProps.cards });
+  // }
 
   render() {
     // console.log('CARDS:', this.props.cards);
-    // console.log('USERS:', this.props.users);
+    console.log('USERS:', this.props.users);
+    console.log('STATUSES:', this.props.statuses);
     // console.log('*********props:', this.props);
     return (
       <div className="App">
@@ -70,6 +71,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   // return { ...state }
+  console.log('stateStatus:', state.statuses);
   return {
     cards: state.cards,
     users: state.users,
