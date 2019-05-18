@@ -1,6 +1,6 @@
 import React, { Component, createRef } from 'react';
 import { connect } from 'react-redux';
-import { addCard, loadCards, loadUsers, loadPriorities, loadStatuses } from '../../actions';
+import { addCard } from '../../actions';
 import UserDropDown from '../../components/UserDropDown';
 import StatusDropDown from '../../components/StatusDropDown';
 import PriorityDropDown from '../../components/PriorityDropDown';
@@ -116,14 +116,12 @@ class AddCard extends Component {
           <select value={this.state.priority_id} onChange={this.handlePriorityChange}>
             {priorityDropDown}
           </select>
-          {/* <input type="text" value={this.state.priority_id} onChange={this.handlePriorityChange} /> */}
         </div>
         <div className="formRow">
           <label>Status:</label>
           <select value={this.state.status_id} onChange={this.handleStatusChange}>
             {statusDropDown}
           </select>
-          {/* <input type="text" value={this.state.status_id} onChange={this.handleStatusChange} /> */}
         </div>
         <div className="formRow">
           <label>Created By:</label>
@@ -143,32 +141,14 @@ class AddCard extends Component {
   }
 }
 
-// const mapStateToProps = (state) => {
-//   return {};
-// };
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    // this first addCard is the one we get from this.props.addBook
+    // this first addCard is the one we get from this.props.addCard
     // in the handleSubmit(e) function
     addCard: (card) => {
       // THIS addCard (below) is the action we imported at top
-      // book is the newBook we'll be passing in
-      const addCardAction = addCard(card);
-      dispatch(addCardAction);
-      // dispatch(addCard(card));
-    },
-    loadCards: () => {
-      dispatch(loadCards());
-    },
-    loadUsers: () => {
-      dispatch(loadUsers());
-    },
-    loadStatuses: () => {
-      dispatch(loadStatuses());
-    },
-    loadPriorities: () => {
-      dispatch(loadPriorities());
+      // card is the newCard we'll be passing in
+      dispatch(addCard(card));
     },
   };
 };

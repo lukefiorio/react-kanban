@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css';
 import AddCard from './containers/AddCard';
 import Board from './containers/Board';
+import CardList from './containers/CardList';
 // import CardToDo from './containers/CardToDo';
 // import CardInProgress from './containers/CardInProgress';
 // import CardDone from './containers/CardDone';
@@ -41,10 +42,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header" />
-        <div className="card-container">
-          {/* pass current props.cards to child (Board) as 'cards' */}
-          <Board cards={this.props.cards} />
-          {/* <div className="cardToDo-container">
+        {/* <div className="card-container"> */}
+        {/* pass current props.cards to child (Board) as 'cards' */}
+        <Board cards={this.props.cards} statuses={this.props.statuses} />
+        {/* <div className="cardToDo-container">
             <h3>To-Do</h3>
             <CardToDo cards={this.props.cards} />
           </div>
@@ -56,7 +57,7 @@ class App extends Component {
             <h3>Done</h3>
             <CardDone cards={this.props.cards} />
           </div> */}
-        </div>
+        {/* </div> */}
         <div className="add-card-form">
           <AddCard users={this.props.users} statuses={this.props.statuses} priorities={this.props.priorities} />
         </div>

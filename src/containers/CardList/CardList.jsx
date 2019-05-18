@@ -39,8 +39,8 @@ class CardList extends Component {
       })
       .map((card, idx) => {
         return (
-          <div id={card.id}>
-            <Card key={idx} id={card.id} title={card.title} body={card.body} />
+          <div key={idx} className="cardBox">
+            <Card id={card.id} title={card.title} body={card.body} />
             <button value={card.id} onClick={this.handleSubmit}>
               Delete Card
             </button>
