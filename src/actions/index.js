@@ -28,11 +28,9 @@ export const loadStatuses = () => {
   return (dispatch) => {
     return fetch('/api/statuses')
       .then((response) => {
-        // console.log('statuses:', response);
         return response.json();
       })
       .then((statuses) => {
-        console.log('statuses:', statuses);
         return dispatch({
           type: LOAD_STATUSES,
           payload: statuses,

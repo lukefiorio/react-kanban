@@ -18,7 +18,29 @@
   flex-direction: row;
 }
 
+.columnBox {
+  width: 100%;
+}
+
+.columnHeader {
+  border-bottom: solid darkslategrey 2px;
+  padding: 10px;
+}
+
 .cardBox {
   border: dotted gray 1px;
   margin: 10px;
+  height: 150px;
+}
+
+.to-do-cardBox {
+  background-color: #f8ec6a;
+}
+
+.in-progress-cardBox {
+  background-color: #90c4c0;
+}
+
+.done-cardBox {
+  background-color: #8fa3cc;
 }
