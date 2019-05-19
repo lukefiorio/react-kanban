@@ -5,6 +5,9 @@ export const LOAD_CARDS = 'LOAD_CARDS';
 export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const LOAD_USERS = 'LOAD_USERS';
 export const DELETE_CARD = 'DELETE_CARD';
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+export const EDIT_CARD = 'EDIT_CARD';
 
 export const loadPriorities = () => {
   return (dispatch) => {
@@ -85,14 +88,58 @@ export function addCard(newCard) {
   };
 }
 
+export function showModal(id) {
+  return (dispatch) => {
+    return fetch(`/api/cards/${id}`, {
+      method: 'GET',
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((body) => {
+        // console.log(body);
+        return dispatch({
+          type: SHOW_MODAL,
+          payload: body,
+        });
+      });
+  };
+}
+
+export function hideModal() {
+  return (dispatch) => {
+    return dispatch({
+      type: HIDE_MODAL,
+    });
+  };
+}
+
+export function editCard(id) {
+  return (dispatch) => {
+    return fetch(`/api/cards/${id}`, {
+      method: 'PUT',
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((body) => {
+        return dispatch({
+          type: EDIT_CARD,
+          payload: body,
+        });
+      })
+      .catch((err) => {
+        console.log('error:', err);
+      });
+  };
+}
+
 export function deleteCard(id) {
-  // console.log(id);
   return (dispatch) => {
     return fetch(`/api/cards/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
-        console.log(response);
         return response.json();
       })
       .then((body) => {
@@ -126,12 +173,12 @@ export const loadCards = () => {
   };
 };
 
-export function changeStatus(editCard) {
+export function changeStatus(editedCard) {
   return (dispatch) => {
     // call out to server
     return fetch('/api/cards', {
       method: 'PUT',
-      body: JSON.stringify(editCard),
+      body: JSON.stringify(editedCard),
       headers: {
         'Content-Type': 'application/json',
       },

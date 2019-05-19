@@ -26,7 +26,6 @@ router
       })
       .then((result) => {
         console.log('Successful post');
-        console.log(result);
         return res.json(result);
       })
       .catch((err) => {
@@ -55,14 +54,18 @@ router
       priority_id: req.body.priority_id,
       status_id: req.body.status_id,
       assigned_to: req.body.assigned_to,
+      created_by: req.body.created_by,
     };
 
     // known based on user thats logged in
-    updateObj.created_by = req.user.id;
+    // updateObj.created_by = req.user.id;
 
     new Card('id', req.params.id).save(updateObj).then((result) => {
       console.log('Successful edit');
-      return res.redirect(`/api/cards/${req.params.id}`);
+      new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
+        const allCards = result.toJSON();
+        return res.send(allCards);
+      });
     });
   })
   .delete((req, res) => {
@@ -72,7 +75,6 @@ router
       .then((result) => {
         new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
           const allCards = result.toJSON();
-          console.log(allCards);
           return res.send(allCards);
         });
       });

@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { Component } from 'react';
+import EditCard from '../../containers/EditCard';
 
-const Card = (props) => {
-  // props are inherited from the parent
-  // object destructuring. takes a key value pair off of an object and stores it to a variable.
-  // this breaks down to:
-  // const title = props.title;
-  // const body = props.body;
-  // gets run
-  // console.log('-----Card instantiated. props:', props);
-  const { title, body, assigned_to, priority } = props;
+class Card extends Component {
+  constructor(props) {
+    super(props);
 
-  // const { title, body, priority_id, status_id, created_by, assigned_to } = props;
+    this.state = { showModal: false };
 
-  return (
-    <div className="card">
-      <div className="cardTitle">{title}</div>
-      <div className="cardBody">{body}</div>
-      <div className={`cardPriority ${priority}-cardPriority`}>Priority: {priority}</div>
-      <div className="cardAssignedTo">
-        Assigned to: {assigned_to.first_name} {assigned_to.last_name}
+    this.handleEdit = this.handleEdit.bind(this);
+  }
+
+  handleEdit(e) {
+    e.preventDefault();
+    this.setState({ showModal: true });
+  }
+
+  render() {
+    return (
+      <div className="card">
+        <div className="cardTitle">{this.props.title}</div>
+        <div className="cardBody">{this.props.body}</div>
+        <div className={`cardPriority ${this.props.priority}-cardPriority`}>Priority: {this.props.priority}</div>
+        <div className="cardAssignedTo">
+          Assigned to: {this.props.assigned_to.first_name} {this.props.assigned_to.last_name}
+        </div>
+        {/* <div>{created_by}</div> */}
+        <button value={this.props.id} onClick={this.handleEdit}>
+          Edit Card
+        </button>
+        {this.state.showModal ? <EditCard {...this.props} /> : null}
       </div>
-      {/* <div>{created_by}</div> */}
-    </div>
-  );
-};
+    );
+  }
+}
 
 export default Card;

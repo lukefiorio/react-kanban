@@ -10,7 +10,14 @@ class Board extends Component {
     const columnList = this.props.statuses.map((status, idx) => {
       return (
         <div key={idx} className="columnBox" id={status.name}>
-          <Column cards={this.props.cards} status={status.id} status_name={status.name} />
+          <Column
+            cards={this.props.cards}
+            users={this.props.users}
+            priorities={this.props.priorities}
+            statuses={this.props.statuses}
+            status={status.id}
+            status_name={status.name}
+          />
         </div>
       );
     });

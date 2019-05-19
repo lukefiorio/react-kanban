@@ -6,6 +6,9 @@ import {
   LOAD_PRIORITIES,
   LOAD_STATUSES,
   DELETE_CARD,
+  EDIT_CARD,
+  SHOW_MODAL,
+  HIDE_MODAL,
 } from '../actions';
 
 const initialState = {
@@ -13,6 +16,8 @@ const initialState = {
   users: [],
   statuses: [],
   priorities: [],
+  showModal: false,
+  modalProps: {},
 };
 
 function cardReducer(state = initialState, action) {
@@ -29,9 +34,21 @@ function cardReducer(state = initialState, action) {
       return Object.assign({}, state, { priorities: [...action.payload] });
     case DELETE_CARD:
       return Object.assign({}, state, { cards: [...action.payload] });
-    case CHANGE_STATUS:
-      // almost certainly needs to be updated
+    case EDIT_CARD:
       return Object.assign({}, state, { cards: [...action.payload] });
+    case CHANGE_STATUS:
+      return Object.assign({}, state, { cards: [...action.payload] });
+    case SHOW_MODAL:
+      console.log(action.payload);
+      return Object.assign({}, state, {
+        showModal: true,
+        modalProps: action.payload,
+      });
+    case HIDE_MODAL:
+      return Object.assign({}, state, {
+        showModal: false,
+        modalProps: {},
+      });
     default:
       return state;
   }

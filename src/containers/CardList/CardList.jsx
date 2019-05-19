@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import Card from '../../components/Card';
-import { deleteCard } from '../../actions';
+import { deleteCard, showModal } from '../../actions';
 import { connect } from 'react-redux';
 
 class CardList extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  handleSubmit(e) {
+  handleDelete(e) {
     e.preventDefault();
     this.props.deleteCard(e.target.value);
   }
@@ -30,7 +30,7 @@ class CardList extends Component {
               assigned_to={card.assigned_to}
               priority={card.priorities.name}
             />
-            <button value={card.id} onClick={this.handleSubmit}>
+            <button value={card.id} onClick={this.handleDelete}>
               Delete Card
             </button>
           </div>
@@ -43,13 +43,11 @@ class CardList extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    // this first deleteCard is the one we get from this.props.deleteCard
-    // in the handleSubmit(e) function
     deleteCard: (id) => {
-      // THIS deleteCard (below) is the action we imported at top
-      // id is the id we'll be passing in
-      const deleteCardAction = deleteCard(id);
-      dispatch(deleteCardAction);
+      dispatch(deleteCard(id));
+    },
+    showModal: (id) => {
+      dispatch(showModal(id));
     },
   };
 };
