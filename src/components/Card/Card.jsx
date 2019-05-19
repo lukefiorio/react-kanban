@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import EditCard from '../../containers/EditCard';
 
 class Card extends Component {
@@ -33,5 +34,21 @@ class Card extends Component {
     );
   }
 }
+
+const mapStateToProps = (store) => {
+  return {
+    cards: store.cards,
+    users: store.users,
+    priorities: store.priorities,
+    statuses: store.statuses,
+    // only if using multiple reducers
+    // cards: state.cardReducer.cards,
+  };
+};
+
+Card = connect(
+  mapStateToProps,
+  null,
+)(Card);
 
 export default Card;
