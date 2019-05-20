@@ -9,11 +9,17 @@ class Card extends Component {
     this.state = { showModal: false };
 
     this.handleEdit = this.handleEdit.bind(this);
+    this.hideEdit = this.hideEdit.bind(this);
   }
 
   handleEdit(e) {
     e.preventDefault();
     this.setState({ showModal: true });
+  }
+
+  hideEdit(e) {
+    e.preventDefault();
+    this.setState({ showModal: false });
   }
 
   render() {
@@ -29,7 +35,11 @@ class Card extends Component {
         <button value={this.props.id} onClick={this.handleEdit}>
           Edit Card
         </button>
-        {this.state.showModal ? <EditCard {...this.props} /> : null}
+        {this.state.showModal ? (
+          <div className="modal">
+            <EditCard {...this.props} hideEdit={this.hideEdit} />{' '}
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -41,6 +51,7 @@ const mapStateToProps = (store) => {
     users: store.users,
     priorities: store.priorities,
     statuses: store.statuses,
+    showModal: store.showModal,
     // only if using multiple reducers
     // cards: state.cardReducer.cards,
   };

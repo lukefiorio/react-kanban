@@ -69,7 +69,6 @@ router
     });
   })
   .delete((req, res) => {
-    console.log(req.params.id);
     Card.where({ id: req.params.id })
       .destroy()
       .then((result) => {

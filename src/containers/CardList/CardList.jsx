@@ -28,6 +28,10 @@ class CardList extends Component {
               title={card.title}
               body={card.body}
               assigned_to={card.assigned_to}
+              assigned_id={card.assigned_to.id}
+              created_id={card.created_by.id}
+              status_id={card.statuses.id}
+              priority_id={card.priorities.id}
               priority={card.priorities.name}
             />
             <button value={card.id} onClick={this.handleDelete}>

@@ -114,10 +114,14 @@ export function hideModal() {
   };
 }
 
-export function editCard(id) {
+export function editCard(card) {
   return (dispatch) => {
-    return fetch(`/api/cards/${id}`, {
+    return fetch(`/api/cards/${card.id}`, {
       method: 'PUT',
+      body: JSON.stringify(card),
+      headers: {
+        'Content-Type': 'application/json',
+      },
     })
       .then((response) => {
         return response.json();
