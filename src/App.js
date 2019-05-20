@@ -25,8 +25,11 @@ class App extends Component {
           priorities={this.props.priorities}
           statuses={this.props.statuses}
         />
-        <div className="add-card-form">
-          <AddCard users={this.props.users} statuses={this.props.statuses} priorities={this.props.priorities} />
+        <div className="add-container">
+          <h4 className="add-header">New Card Form</h4>
+          <div className="add-card-form">
+            <AddCard users={this.props.users} statuses={this.props.statuses} priorities={this.props.priorities} />
+          </div>
         </div>
       </div>
     );
