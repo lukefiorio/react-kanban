@@ -9,10 +9,15 @@ const Card = require('../database/models/Card');
 router
   .route('/')
   .get((req, res) => {
-    new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
-      const allCards = result.toJSON();
-      return res.send(allCards);
-    });
+    new Card()
+      .query((qb) => {
+        qb.orderBy('id', 'ASC');
+      })
+      .fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] })
+      .then((result) => {
+        const allCards = result.toJSON();
+        return res.send(allCards);
+      });
   })
   .post((req, res) => {
     new Card()
@@ -25,8 +30,15 @@ router
         assigned_to: req.body.assigned_to,
       })
       .then((result) => {
-        console.log('Successful post');
-        return res.json(result);
+        Card.where({ id: result.id })
+          .fetch({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] })
+          .then((result) => {
+            const card = result.toJSON();
+            return res.json(card);
+          });
+        // console.log('Successful post');
+        // console.log(result);
+        // return res.json(result);
       })
       .catch((err) => {
         console.log('error:', err);
@@ -62,20 +74,30 @@ router
 
     new Card('id', req.params.id).save(updateObj).then((result) => {
       console.log('Successful edit');
-      new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
-        const allCards = result.toJSON();
-        return res.send(allCards);
-      });
+      new Card()
+        .query((qb) => {
+          qb.orderBy('id', 'ASC');
+        })
+        .fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] })
+        .then((result) => {
+          const allCards = result.toJSON();
+          return res.send(allCards);
+        });
     });
   })
   .delete((req, res) => {
     Card.where({ id: req.params.id })
       .destroy()
       .then((result) => {
-        new Card().fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] }).then((result) => {
-          const allCards = result.toJSON();
-          return res.send(allCards);
-        });
+        new Card()
+          .query((qb) => {
+            qb.orderBy('id', 'ASC');
+          })
+          .fetchAll({ withRelated: ['created_by', 'assigned_to', 'priorities', 'statuses'] })
+          .then((result) => {
+            const allCards = result.toJSON();
+            return res.send(allCards);
+          });
       });
   });
 

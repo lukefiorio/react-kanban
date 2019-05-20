@@ -39,7 +39,6 @@ function cardReducer(state = initialState, action) {
     case CHANGE_STATUS:
       return Object.assign({}, state, { cards: [...action.payload] });
     case SHOW_MODAL:
-      console.log(action.payload);
       return Object.assign({}, state, {
         showModal: true,
         modalProps: action.payload,

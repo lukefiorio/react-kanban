@@ -22,7 +22,7 @@ class CardList extends Component {
       })
       .map((card, idx) => {
         return (
-          <div key={idx} className={`cardBox ${card.statuses.name}-cardBox`}>
+          <div key={idx} className={`cardBox ${card.statuses ? card.statuses.name : null}-cardBox`}>
             <Card
               id={card.id}
               title={card.title}
@@ -30,9 +30,9 @@ class CardList extends Component {
               assigned_to={card.assigned_to}
               assigned_id={card.assigned_to.id}
               created_id={card.created_by.id}
-              status_id={card.statuses.id}
-              priority_id={card.priorities.id}
-              priority={card.priorities.name}
+              status_id={card.statuses ? card.statuses.id : null}
+              priority_id={card.priorities ? card.priorities.id : null}
+              priority={card.priorities ? card.priorities.name : null}
             />
             <button value={card.id} onClick={this.handleDelete}>
               Delete Card
